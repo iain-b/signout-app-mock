@@ -1,15 +1,27 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { Autocomplete, Button, Input, TextField } from "@mui/material";
 
 type Inputs = {
   admittingDiagnosis: string;
   name: string;
+  id: string;
   location: string;
   dateOfBirth: string;
+  background: string[];
 };
 
 export const AEAdmissionForm = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, control } = useForm<Inputs>({
+    defaultValues: {
+      admittingDiagnosis: "",
+      name: "",
+      id: "",
+      location: "",
+      dateOfBirth: "",
+      background: [],
+    },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   return (
@@ -20,33 +32,47 @@ export const AEAdmissionForm = () => {
           <label htmlFor="admitting-diagnosis">Admitting Diagnosis</label>
         </div>
         <div className="col-span-9">
-          <input
-            id="admitting-diagnosis"
-            list="diagnoses"
-            className="form-input w-full"
-            {...register("admittingDiagnosis")}
+          <Controller
+            name="admittingDiagnosis"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                freeSolo
+                options={[
+                  "Appendicitis",
+                  "Head injury",
+                  "Pancreatitis",
+                  "Cholecystitis",
+                  "Abscess",
+                  "Diverticulitis",
+                  "Small bowel obstruction",
+                  "Acute hernia",
+                  "Obstructive jaundice_Cholangitis",
+                  "Gastrointestinal perforation",
+                  "Polytrauma",
+                ]}
+                value={value}
+                onChange={(event, newValue) => onChange(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select or type conditions"
+                    variant="outlined"
+                    size="small"
+                  />
+                )}
+              />
+            )}
           />
-          <datalist id="diagnoses">
-            <option value="Appendicitis" />
-            <option value="Head injury" />
-            <option value="Pancreatitis" />
-            <option value="Cholecystitis" />
-            <option value="Abscess" />
-            <option value="Diverticulitis" />
-            <option value="Small bowel obstruction" />
-            <option value="Acute hernia" />
-            <option value="Obstructive jaundice_Cholangitis" />
-            <option value="Gastrointestinal perforation" />
-            <option value="Polytrauma" />
-          </datalist>
         </div>
         <div className="col-span-3">
           <label htmlFor="patient-name">Name</label>
         </div>
         <div className="col-span-3">
-          <input
+          <TextField
             id="patient-name"
-            className="form-input"
+            size="small"
+            variant="outlined"
             {...register("name")}
           />
         </div>
@@ -55,20 +81,16 @@ export const AEAdmissionForm = () => {
           <label htmlFor="location">Patient ID</label>
         </div>
         <div className="col-span-3">
-          <input
-            id="location"
-            className="form-input"
-            {...register("dateOfBirth")}
-          />
+          <TextField size="small" variant="outlined" {...register("id")} />
         </div>
 
         <div className="col-span-3">
           <label htmlFor="location">Date of Birth</label>
         </div>
         <div className="col-span-3">
-          <input
-            id="location"
-            className="form-input"
+          <TextField
+            size="small"
+            variant="outlined"
             {...register("dateOfBirth")}
           />
         </div>
@@ -77,11 +99,51 @@ export const AEAdmissionForm = () => {
           <label htmlFor="location">Location</label>
         </div>
         <div className="col-span-3">
-          <input
-            id="location"
-            className="form-input"
+          <TextField
+            size="small"
+            variant="outlined"
             {...register("location")}
           />
+        </div>
+        <div className="col-span-3">
+          <label htmlFor="location">Background</label>
+        </div>
+        <div className="col-span-9">
+          <Controller
+            name="background"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                multiple
+                freeSolo
+                options={[
+                  "DM",
+                  "COPD",
+                  "IHD",
+                  "Atrial fibrillation",
+                  "Smoker",
+                  "C2H5OH excess",
+                  "CVA",
+                  "Cognitive impairment",
+                ]}
+                value={value}
+                onChange={(event, newValue) => onChange(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select or type conditions"
+                    variant="outlined"
+                    size="small"
+                  />
+                )}
+              />
+            )}
+          />
+        </div>
+        <div className="col-span-12">
+          <Button type="submit" variant="contained" color="primary">
+            Save Admission
+          </Button>
         </div>
       </div>
     </form>
