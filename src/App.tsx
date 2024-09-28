@@ -3,9 +3,101 @@ import "./App.css";
 import { AEAdmissionForm } from "./AEAdmissionForm";
 import { StorageClient } from "./storage";
 import { AEAdmission, SignOutRecord } from "./types";
-import { set } from "react-hook-form";
+import {
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TextField,
+} from "@mui/material";
 
 const useStorageClient = () => new StorageClient();
+
+const EditableTable = ({
+  record,
+  onChange,
+}: {
+  record: SignOutRecord | null;
+  onChange: () => void;
+}) => {
+  const client = useStorageClient();
+
+  return (
+    <Table className="min-w-full border-collapse border border-gray-300">
+      <TableBody>
+        <TableRow className="bg-blue-50 border-b">
+          <TableCell className="px-6 py-3 text-left text-sm font-bold text-gray-700 w-1/3">
+            Consultant
+          </TableCell>
+          <TableCell className="px-6 py-3 text-sm text-gray-900 w-2/3">
+            <Select
+              className="w-full"
+              size="small"
+              value={record?.consultant || ""}
+              onChange={(e) => {
+                client.setConsultant(e.target.value);
+                onChange();
+              }}
+            >
+              <MenuItem value="Augustus Caesar">Augustus Caesar</MenuItem>
+              <MenuItem value="Marcus Aurelius">Marcus Aurelius</MenuItem>
+              <MenuItem value="Trajan">Trajan</MenuItem>
+              <MenuItem value="Justinian">Justinian</MenuItem>
+            </Select>
+          </TableCell>
+        </TableRow>
+        <TableRow className="bg-white border-b">
+          <TableCell className="px-6 py-3 text-left text-sm font-bold text-gray-700">
+            Registrar
+          </TableCell>
+          <TableCell className="px-6 py-3 text-sm text-gray-900">
+            <Select
+              className="w-full"
+              size="small"
+              value={record?.registrar || ""}
+              onChange={(e) => {
+                client.setRegistrar(e.target.value);
+                onChange();
+              }}
+              label="Registrar"
+            >
+              <MenuItem value="Caligula">Caligula</MenuItem>
+              <MenuItem value="Nero">Nero</MenuItem>
+              <MenuItem value="Tiberius">Tiberius</MenuItem>
+              <MenuItem value="Agrippina">Agrippina</MenuItem>
+              <MenuItem value="Claudius">Claudius</MenuItem>
+            </Select>
+          </TableCell>
+        </TableRow>
+        <TableRow className="bg-blue-50">
+          <TableCell className="px-6 py-3 text-left text-sm font-bold text-gray-700">
+            SHO
+          </TableCell>
+          <TableCell className="px-6 py-3 text-sm text-gray-900">
+            <Select
+              className="w-full"
+              size="small"
+              value={record?.sho || ""}
+              onChange={(e) => {
+                client.setSHO(e.target.value);
+                onChange();
+              }}
+              label="SHO"
+            >
+              <MenuItem value="Civis 1">Civis 1</MenuItem>
+              <MenuItem value="Civis 2">Civis 2</MenuItem>
+              <MenuItem value="Civis 3">Civis 3</MenuItem>
+              <MenuItem value="Civis 4">Civis 4</MenuItem>
+              <MenuItem value="Civis 5">Civis 5</MenuItem>
+            </Select>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+};
 
 function App() {
   const client = useStorageClient();
@@ -13,6 +105,9 @@ function App() {
   const reloadData = useCallback(() => {
     setRecord(client.getSignOutRecord());
   }, [client, setRecord]);
+  useEffect(() => {
+    reloadData();
+  }, []);
   const saveAdmission = useCallback(
     (admission: AEAdmission) => {
       client.saveAEAdmission(admission);
@@ -29,34 +124,7 @@ function App() {
         </h2>
         <div className="grid grid-cols-2">
           <div className="p-1">
-            <table className="min-w-full table-auto border-collapse border border-gray-300">
-              <tbody>
-                <tr className="bg-blue-50 border-b">
-                  <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
-                    Consultant
-                  </th>
-                  <td className="px-6 py-3 text-sm text-gray-900">
-                    {record?.consultant}
-                  </td>
-                </tr>
-                <tr className="bg-white border-b">
-                  <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
-                    Registrar
-                  </th>
-                  <td className="px-6 py-3 text-sm text-gray-900">
-                    {record?.registrar}
-                  </td>
-                </tr>
-                <tr className="bg-blue-50">
-                  <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
-                    SHO
-                  </th>
-                  <td className="px-6 py-3 text-sm text-gray-900">
-                    {record?.sho}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <EditableTable record={record} onChange={reloadData} />
           </div>
           <div className="p-1">
             <div className="overflow-x-auto">
