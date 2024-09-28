@@ -1,35 +1,14 @@
 import React from "react";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
-import { Autocomplete, Button, Input, Switch, TextField } from "@mui/material";
+import { Autocomplete, Button, Switch, TextField } from "@mui/material";
+import { AEAdmission } from "./types";
 
-type Inputs = {
-  admittingDiagnosis: string;
-  name: string;
-  id: string;
-  location: string;
-  dateOfBirth: string;
-  background: string[];
-  hasAnticoagulant: boolean;
-  anticoagulantUsed?: string;
-  hasAntiplatelet: boolean;
-  antiplateletUsed?: string;
-  oe: string;
-  imaging: string;
-  isImagingFinalised: boolean;
-  labs: { wcc: number; crp: number };
-  plan: {
-    antibiotics: string[];
-    fasting: boolean;
-    isIRPlanned: boolean;
-    isSurgicalInterventionPlanned: boolean;
-    comments: string;
-    isHduOrIcuAdmission: boolean;
-  };
-  anticipatedComplexDischarge: boolean;
-};
-
-export const AEAdmissionForm = () => {
-  const { register, handleSubmit, control } = useForm<Inputs>({
+export const AEAdmissionForm = ({
+  onSave,
+}: {
+  onSave: (admission: AEAdmission) => void;
+}) => {
+  const { register, handleSubmit, control } = useForm<AEAdmission>({
     defaultValues: {
       admittingDiagnosis: "",
       name: "",
@@ -60,9 +39,11 @@ export const AEAdmissionForm = () => {
     control,
     name: ["hasAnticoagulant", "hasAntiplatelet"],
   });
-  console.log("watches", hasAnticoagulant);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<AEAdmission> = (data) => {
+    console.log(data);
+    onSave(data);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3 className="text-2xl text-gray-700">Add A&E Admission</h3>
