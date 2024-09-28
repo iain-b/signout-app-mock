@@ -10,7 +10,6 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TextField,
 } from "@mui/material";
 
 const useStorageClient = () => new StorageClient();
@@ -107,7 +106,7 @@ function App() {
   }, [client, setRecord]);
   useEffect(() => {
     reloadData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const saveAdmission = useCallback(
     (admission: AEAdmission) => {
       client.saveAEAdmission(admission);
