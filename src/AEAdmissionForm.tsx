@@ -16,7 +16,16 @@ type Inputs = {
   oe: string;
   imaging: string;
   isImagingFinalised: boolean;
-  plan: string;
+  labs: { wcc: number; crp: number };
+  plan: {
+    antibiotics: string[];
+    fasting: boolean;
+    isIRPlanned: true;
+    isSurgicalInterventionPlanned: boolean;
+    comments: string;
+    isHduOrIcuAdmission: boolean;
+  };
+  anticipatedComplexDischarge: boolean;
 };
 
 export const AEAdmissionForm = () => {
@@ -40,44 +49,7 @@ export const AEAdmissionForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3 className="text-2xl text-gray-700">Add A&E Admission</h3>
-      <div className="grid grid-cols-12 gap-y-2">
-        <div className="col-span-3">
-          <label htmlFor="admitting-diagnosis">Admitting Diagnosis</label>
-        </div>
-        <div className="col-span-9">
-          <Controller
-            name="admittingDiagnosis"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <Autocomplete
-                freeSolo
-                options={[
-                  "Appendicitis",
-                  "Head injury",
-                  "Pancreatitis",
-                  "Cholecystitis",
-                  "Abscess",
-                  "Diverticulitis",
-                  "Small bowel obstruction",
-                  "Acute hernia",
-                  "Obstructive jaundice_Cholangitis",
-                  "Gastrointestinal perforation",
-                  "Polytrauma",
-                ]}
-                value={value}
-                onChange={(event, newValue) => onChange(newValue)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Select or type conditions"
-                    variant="outlined"
-                    size="small"
-                  />
-                )}
-              />
-            )}
-          />
-        </div>
+      <div className="grid grid-cols-12 gap-y-3">
         <div className="col-span-3">
           <label htmlFor="patient-name">Name</label>
         </div>
@@ -116,6 +88,43 @@ export const AEAdmissionForm = () => {
             size="small"
             variant="outlined"
             {...register("location")}
+          />
+        </div>
+        <div className="col-span-3">
+          <label htmlFor="admitting-diagnosis">Admitting Diagnosis</label>
+        </div>
+        <div className="col-span-9">
+          <Controller
+            name="admittingDiagnosis"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                freeSolo
+                options={[
+                  "Appendicitis",
+                  "Head injury",
+                  "Pancreatitis",
+                  "Cholecystitis",
+                  "Abscess",
+                  "Diverticulitis",
+                  "Small bowel obstruction",
+                  "Acute hernia",
+                  "Obstructive jaundice_Cholangitis",
+                  "Gastrointestinal perforation",
+                  "Polytrauma",
+                ]}
+                value={value}
+                onChange={(event, newValue) => onChange(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select or type conditions"
+                    variant="outlined"
+                    size="small"
+                  />
+                )}
+              />
+            )}
           />
         </div>
         <div className="col-span-3">
@@ -262,6 +271,60 @@ export const AEAdmissionForm = () => {
         </div>
         <div className="col-span-3">
           <Switch {...register("isImagingFinalised")} />
+        </div>
+        <div className="col-span-3 row-span-3">
+          <label htmlFor="location">Plan</label>
+        </div>
+        <div className="col-span-9">
+          <Controller
+            name="plan.antibiotics"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                freeSolo
+                multiple
+                options={["augmentin", "tazocin", "cipro", "metro", "cef"]}
+                value={value}
+                onChange={(event, newValue) => onChange(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select or type antibiotics"
+                    variant="outlined"
+                    size="small"
+                  />
+                )}
+              />
+            )}
+          />
+        </div>
+        <div className="col-span-1">
+          <label htmlFor="location">Fasting</label>
+        </div>
+        <div className="col-span-1">
+          <Switch {...register("plan.fasting")} />
+        </div>
+        <div className="col-span-2">
+          <label htmlFor="location">IR Planned</label>
+        </div>
+        <div className="col-span-1">
+          <Switch {...register("plan.isIRPlanned")} />
+        </div>
+        <div className="col-span-3">
+          <label htmlFor="location">Surgical Intervention Planned</label>
+        </div>
+        <div className="col-span-1">
+          <Switch {...register("plan.isSurgicalInterventionPlanned")} />
+        </div>
+        <div className="col-span-9">
+          <TextField
+            id="plan-comments"
+            size="small"
+            variant="outlined"
+            className="w-full"
+            placeholder="Comments"
+            {...register("plan.comments")}
+          />
         </div>
         <div className="col-span-12">
           <Button type="submit" variant="contained" color="primary">
