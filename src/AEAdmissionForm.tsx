@@ -20,7 +20,7 @@ type Inputs = {
   plan: {
     antibiotics: string[];
     fasting: boolean;
-    isIRPlanned: true;
+    isIRPlanned: boolean;
     isSurgicalInterventionPlanned: boolean;
     comments: string;
     isHduOrIcuAdmission: boolean;
@@ -37,6 +37,23 @@ export const AEAdmissionForm = () => {
       location: "",
       dateOfBirth: "",
       background: [],
+      imaging: "",
+      isImagingFinalised: false,
+      oe: "",
+      hasAnticoagulant: false,
+      hasAntiplatelet: false,
+      anticoagulantUsed: "",
+      antiplateletUsed: "",
+      anticipatedComplexDischarge: false,
+      plan: {
+        antibiotics: [],
+        isIRPlanned: false,
+        comments: "",
+        fasting: false,
+        isHduOrIcuAdmission: false,
+        isSurgicalInterventionPlanned: false,
+      },
+      labs: { wcc: 0, crp: 0 },
     },
   });
   const [hasAnticoagulant, hasAntiplatelet] = useWatch({
@@ -272,6 +289,37 @@ export const AEAdmissionForm = () => {
         <div className="col-span-3">
           <Switch {...register("isImagingFinalised")} />
         </div>
+        <div className="col-span-3">
+          <label>Labs</label>
+        </div>
+        <div className="col-span-1">
+          <label>WCC</label>
+        </div>
+        <div className="col-span-3">
+          <TextField
+            id="lab-wcc"
+            size="small"
+            variant="outlined"
+            placeholder="WCC"
+            inputProps={{ step: "0.01" }}
+            type="number"
+            {...register("labs.wcc")}
+          />
+        </div>
+        <div className="col-span-1">
+          <label>CRP</label>
+        </div>
+        <div className="col-span-3">
+          <TextField
+            id="lab-wcc"
+            size="small"
+            variant="outlined"
+            placeholder="CRP"
+            type="number"
+            inputProps={{ step: "0.1" }}
+            {...register("labs.crp")}
+          />
+        </div>
         <div className="col-span-3 row-span-3">
           <label htmlFor="location">Plan</label>
         </div>
@@ -325,6 +373,18 @@ export const AEAdmissionForm = () => {
             placeholder="Comments"
             {...register("plan.comments")}
           />
+        </div>
+        <div className="col-span-3">
+          <label htmlFor="location">ICU/HDU</label>
+        </div>
+        <div className="col-span-9">
+          <Switch {...register("plan.isHduOrIcuAdmission")} />
+        </div>
+        <div className="col-span-3">
+          <label htmlFor="location">Anticipated Complex Discharge</label>
+        </div>
+        <div className="col-span-9">
+          <Switch {...register("anticipatedComplexDischarge")} />
         </div>
         <div className="col-span-12">
           <Button type="submit" variant="contained" color="primary">
