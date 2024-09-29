@@ -3,6 +3,16 @@ import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 import { Autocomplete, Button, Switch, TextField } from "@mui/material";
 import { AEAdmission } from "./types";
 
+function valueOrFreeText(
+  newValue: string | string[] | null,
+): string | string[] | null {
+  const otherOptionValue = "Other (freetext)";
+  if (Array.isArray(newValue)) {
+    return newValue.filter((it) => it !== otherOptionValue);
+  }
+  return newValue === otherOptionValue ? "" : newValue;
+}
+
 export const AEAdmissionForm = ({
   onSave,
 }: {
@@ -34,6 +44,7 @@ export const AEAdmissionForm = ({
       },
       labs: { wcc: 0, crp: 0 },
     },
+    mode: "onBlur",
   });
   const [hasAnticoagulant, hasAntiplatelet] = useWatch({
     control,
@@ -110,9 +121,12 @@ export const AEAdmissionForm = ({
                   "Obstructive jaundice_Cholangitis",
                   "Gastrointestinal perforation",
                   "Polytrauma",
+                  "Other (freetext)",
                 ]}
                 value={value}
-                onChange={(event, newValue) => onChange(newValue)}
+                onChange={(event, newValue) =>
+                  onChange(valueOrFreeText(newValue))
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -145,9 +159,12 @@ export const AEAdmissionForm = ({
                   "C2H5OH excess",
                   "CVA",
                   "Cognitive impairment",
+                  "Other (freetext)",
                 ]}
                 value={value}
-                onChange={(event, newValue) => onChange(newValue)}
+                onChange={(event, newValue) =>
+                  onChange(valueOrFreeText(newValue))
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -211,10 +228,18 @@ export const AEAdmissionForm = ({
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 freeSolo
-                options={["Aspirin", "Clopidogrel", "Prasugrel", "Ticagrelor"]}
+                options={[
+                  "Aspirin",
+                  "Clopidogrel",
+                  "Prasugrel",
+                  "Ticagrelor",
+                  "Other (freetext)",
+                ]}
                 value={value}
                 disabled={!hasAntiplatelet}
-                onChange={(event, newValue) => onChange(newValue)}
+                onChange={(event, newValue) =>
+                  onChange(valueOrFreeText(newValue))
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -248,9 +273,17 @@ export const AEAdmissionForm = ({
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 freeSolo
-                options={["CT", "US", "Awaited", "None planned"]}
+                options={[
+                  "CT",
+                  "US",
+                  "Awaited",
+                  "None planned",
+                  "Other (freetext)",
+                ]}
                 value={value}
-                onChange={(event, newValue) => onChange(newValue)}
+                onChange={(event, newValue) =>
+                  onChange(valueOrFreeText(newValue))
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -268,7 +301,7 @@ export const AEAdmissionForm = ({
             Finalised Report
           </label>
         </div>
-        <div className="col-span-9">
+        <div className="lg:col-span-3 col-span-9">
           <Switch {...register("isImagingFinalised")} />
         </div>
         <div className="lg:col-span-3 col-span-3">
@@ -288,7 +321,7 @@ export const AEAdmissionForm = ({
             {...register("labs.wcc")}
           />
         </div>
-        <div className="lg:col-span- col-span-3 col-start-4">
+        <div className="lg:col-span-1 col-span-3 col-start-4">
           <label>CRP</label>
         </div>
         <div className="lg:col-span-3 col-span-6">
@@ -313,9 +346,18 @@ export const AEAdmissionForm = ({
               <Autocomplete
                 freeSolo
                 multiple
-                options={["augmentin", "tazocin", "cipro", "metro", "cef"]}
+                options={[
+                  "augmentin",
+                  "tazocin",
+                  "cipro",
+                  "metro",
+                  "cef",
+                  "Other (freetext)",
+                ]}
                 value={value}
-                onChange={(event, newValue) => onChange(newValue)}
+                onChange={(event, newValue) =>
+                  onChange(valueOrFreeText(newValue))
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
