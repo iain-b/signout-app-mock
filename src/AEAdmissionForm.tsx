@@ -101,7 +101,7 @@ export const AEAdmissionForm = ({
         <div className="lg:col-span-3 col-span-3">
           <label htmlFor="location">Date of Birth</label>
         </div>
-        <div className="lg:col-span-3 col-span-9">
+        <div className="lg:col-span-3 col-span-9 pr-5">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Controller
               name="dateOfBirth"
@@ -111,16 +111,15 @@ export const AEAdmissionForm = ({
                   label="Date of Birth"
                   value={dayjs(field.value)}
                   onChange={(newValue) => field.onChange(newValue)}
-                  // renderInput={(params: any) => <TextField {...params} />}
+                  slotProps={{
+                    textField: {
+                      size: "small",
+                    },
+                  }}
                 />
               )}
             />
           </LocalizationProvider>
-          {/*<TextField*/}
-          {/*  size="small"*/}
-          {/*  variant="outlined"*/}
-          {/*  {...register("dateOfBirth")}*/}
-          {/*/>*/}
         </div>
 
         <div className="lg:col-span-3 col-span-3">
