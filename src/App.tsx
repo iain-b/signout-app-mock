@@ -4,6 +4,7 @@ import { AEAdmissionForm } from "./AEAdmissionForm";
 import { StorageClient } from "./storage";
 import { AEAdmission, SignOutRecord } from "./types";
 import {
+  IconButton,
   MenuItem,
   Select,
   Table,
@@ -11,6 +12,7 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 
 const useStorageClient = () => new StorageClient();
 
@@ -136,6 +138,11 @@ function App() {
                     <td className="px-6 py-3 text-sm text-gray-900">
                       {record?.operations?.length ?? 0}
                     </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
+                    </td>
                   </tr>
                   <tr className="bg-white border-b">
                     <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
@@ -143,6 +150,11 @@ function App() {
                     </th>
                     <td className="px-6 py-3 text-sm text-gray-900">
                       {record?.AEAdmissions?.length ?? 0}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
                     </td>
                   </tr>
                   <tr className="bg-white border-b">
@@ -154,6 +166,11 @@ function App() {
                         (it) => it.plan?.isHduOrIcuAdmission,
                       ).length ?? 0}
                     </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
+                    </td>
                   </tr>
                   <tr className="bg-blue-50 border-b">
                     <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
@@ -161,6 +178,11 @@ function App() {
                     </th>
                     <td className="px-6 py-3 text-sm text-gray-900">
                       {record?.AEDischarges?.length ?? 0}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
                     </td>
                   </tr>
                   <tr className="bg-white border-b">
@@ -170,6 +192,11 @@ function App() {
                     <td className="px-6 py-3 text-sm text-gray-900">
                       {record?.AEConsults?.length ?? 0}
                     </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
+                    </td>
                   </tr>
                   <tr className="bg-blue-50 border-b">
                     <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
@@ -177,6 +204,11 @@ function App() {
                     </th>
                     <td className="px-6 py-3 text-sm text-gray-900">
                       {record?.referrals?.length ?? 0}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
                     </td>
                   </tr>
                   <tr className="bg-white border-b">
@@ -186,6 +218,11 @@ function App() {
                     <td className="px-6 py-3 text-sm text-gray-900">
                       {record?.inHouseConsults?.length ?? 0}
                     </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
+                    </td>
                   </tr>
                   <tr className="bg-blue-50">
                     <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
@@ -193,6 +230,11 @@ function App() {
                     </th>
                     <td className="px-6 py-3 text-sm text-gray-900">
                       {record?.floorIssues?.length ?? 0}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-900 text-right">
+                      <IconButton color="default" aria-label="add" size="small">
+                        <AddIcon />
+                      </IconButton>
                     </td>
                   </tr>
                 </tbody>
