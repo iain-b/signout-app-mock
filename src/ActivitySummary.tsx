@@ -1,9 +1,64 @@
 import { StaffTable } from "./StaffTable";
-import { IconButton } from "@mui/material";
+import {
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import React from "react";
 import { SignOutRecord } from "./types";
 import { useNavigate } from "react-router-dom";
+
+const AdmissionTable = function AdmissionTable({
+  record,
+}: {
+  record: SignOutRecord | null;
+}) {
+  return (
+    <TableContainer component={Paper} className="w-full border" elevation={0}>
+      <Typography variant="h6" component="div" className="text-grey-700 p-4">
+        A&E Admissions
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <b className="text-gray-700">Name</b>
+            </TableCell>
+            <TableCell>
+              <b className="text-gray-700">Date of Birth</b>
+            </TableCell>
+            <TableCell>
+              <b className="text-gray-700">Diagnosis</b>
+            </TableCell>
+            <TableCell>
+              <b className="text-gray-700">Location</b>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {record?.AEAdmissions?.map((admission, index) => (
+            <TableRow
+              key={admission.id}
+              className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
+            >
+              <TableCell>{admission.name}</TableCell>
+              <TableCell>{admission.dateOfBirth}</TableCell>
+              <TableCell>{admission.admittingDiagnosis}</TableCell>
+              <TableCell>{admission.location}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
 
 export const ActivitySummary = ({
   record,
@@ -136,6 +191,9 @@ export const ActivitySummary = ({
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="p-1 col-span-2">
+        <AdmissionTable record={record} />
       </div>
     </div>
   );
