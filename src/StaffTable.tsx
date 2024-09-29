@@ -56,7 +56,6 @@ export const StaffTable = ({
                 client.setRegistrar(e.target.value);
                 onChange();
               }}
-              label="Registrar"
             >
               <MenuItem value="Caligula">Caligula</MenuItem>
               <MenuItem value="Nero">Nero</MenuItem>
@@ -79,7 +78,6 @@ export const StaffTable = ({
                 client.setSHO(e.target.value);
                 onChange();
               }}
-              label="SHO"
             >
               <MenuItem value="Civis 1">Civis 1</MenuItem>
               <MenuItem value="Civis 2">Civis 2</MenuItem>

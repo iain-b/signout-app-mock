@@ -2,6 +2,7 @@ import React from "react";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 import { Autocomplete, Button, Switch, TextField } from "@mui/material";
 import { AEAdmission } from "./types";
+import { useNavigate } from "react-router-dom";
 
 function valueOrFreeText(
   newValue: string | string[] | null,
@@ -50,10 +51,12 @@ export const AEAdmissionForm = ({
     control,
     name: ["hasAnticoagulant", "hasAntiplatelet"],
   });
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<AEAdmission> = (data) => {
     console.log(data);
     onSave(data);
+    navigate("/");
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
