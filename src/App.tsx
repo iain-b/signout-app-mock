@@ -3,7 +3,7 @@ import "./App.css";
 import { AEAdmissionForm } from "./AEAdmissionForm";
 import { StorageClient } from "./storage";
 import { AEAdmission, SignOutRecord } from "./types";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { ActivitySummary } from "./ActivitySummary";
 
 export const useStorageClient = () => new StorageClient();
