@@ -20,6 +20,7 @@ const AdmissionTable = function AdmissionTable({
 }: {
   record: SignOutRecord | null;
 }) {
+  const navigate = useNavigate();
   return (
     <TableContainer component={Paper} className="w-full border" elevation={0}>
       <Typography variant="h6" component="div" className="text-grey-700 p-4">
@@ -47,6 +48,9 @@ const AdmissionTable = function AdmissionTable({
             <TableRow
               key={admission.id}
               className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
+              onClick={() =>
+                navigate(`/new-admission?patientId=${admission.id}`)
+              }
             >
               <TableCell>{admission.name}</TableCell>
               <TableCell>{admission.dateOfBirth}</TableCell>

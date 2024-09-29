@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 import { Autocomplete, Button, Switch, TextField } from "@mui/material";
 import { AEAdmission } from "./types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useStorageClient } from "./App";
 
 function valueOrFreeText(
   newValue: string | string[] | null,
@@ -19,7 +20,7 @@ export const AEAdmissionForm = ({
 }: {
   onSave: (admission: AEAdmission) => void;
 }) => {
-  const { register, handleSubmit, control } = useForm<AEAdmission>({
+  const { register, handleSubmit, control, reset } = useForm<AEAdmission>({
     defaultValues: {
       admittingDiagnosis: "",
       name: "",
@@ -47,11 +48,23 @@ export const AEAdmissionForm = ({
     },
     mode: "onBlur",
   });
-  const [hasAnticoagulant, hasAntiplatelet] = useWatch({
+  const [hasAnticoagulant, hasAntiplatelet, patientId] = useWatch({
     control,
-    name: ["hasAnticoagulant", "hasAntiplatelet"],
+    name: ["hasAnticoagulant", "hasAntiplatelet", "id"],
   });
   const navigate = useNavigate();
+  const client = useStorageClient();
+  const [searchParams] = useSearchParams();
+  useEffect(() => {
+    const patientIdFromURL = searchParams.get("patientId");
+    if (patientIdFromURL && patientIdFromURL !== patientId) {
+      reset(
+        client
+          .getSignOutRecord()
+          .AEAdmissions.find((it) => it.id === patientIdFromURL),
+      );
+    }
+  }, [searchParams, client, patientId, reset]);
 
   const onSubmit: SubmitHandler<AEAdmission> = (data) => {
     console.log(data);
