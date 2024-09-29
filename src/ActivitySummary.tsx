@@ -35,13 +35,10 @@ const AdmissionTable = function AdmissionTable({
               <b className="text-gray-700">Name</b>
             </TableCell>
             <TableCell>
-              <b className="text-gray-700">Date of Birth</b>
+              <b className="text-gray-700">D.O.B</b>
             </TableCell>
             <TableCell>
               <b className="text-gray-700">Diagnosis</b>
-            </TableCell>
-            <TableCell>
-              <b className="text-gray-700">Location</b>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -59,7 +56,6 @@ const AdmissionTable = function AdmissionTable({
                 {today.diff(dayjs(admission.dateOfBirth), "year").toString()}
               </TableCell>
               <TableCell>{admission.admittingDiagnosis}</TableCell>
-              <TableCell>{admission.location}</TableCell>
             </TableRow>
           ))}
         </TableBody>
