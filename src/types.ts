@@ -1,5 +1,3 @@
-import { Dayjs } from "dayjs";
-
 export type AEAdmission = {
   admittingDiagnosis: string;
   name: string;

@@ -1,13 +1,13 @@
 import { StaffTable } from "./StaffTable";
 import {
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Typography,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
