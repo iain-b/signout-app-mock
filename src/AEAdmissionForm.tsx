@@ -4,6 +4,10 @@ import { Autocomplete, Button, Switch, TextField } from "@mui/material";
 import { AEAdmission } from "./types";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useStorageClient } from "./App";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 function valueOrFreeText(
   newValue: string | string[] | null,
@@ -98,11 +102,25 @@ export const AEAdmissionForm = ({
           <label htmlFor="location">Date of Birth</label>
         </div>
         <div className="lg:col-span-3 col-span-9">
-          <TextField
-            size="small"
-            variant="outlined"
-            {...register("dateOfBirth")}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Controller
+              name="dateOfBirth"
+              control={control}
+              render={({ field }) => (
+                <DatePicker
+                  label="Date of Birth"
+                  value={dayjs(field.value)}
+                  onChange={(newValue) => field.onChange(newValue)}
+                  // renderInput={(params: any) => <TextField {...params} />}
+                />
+              )}
+            />
+          </LocalizationProvider>
+          {/*<TextField*/}
+          {/*  size="small"*/}
+          {/*  variant="outlined"*/}
+          {/*  {...register("dateOfBirth")}*/}
+          {/*/>*/}
         </div>
 
         <div className="lg:col-span-3 col-span-3">

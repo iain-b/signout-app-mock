@@ -14,6 +14,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import React from "react";
 import { SignOutRecord } from "./types";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const AdmissionTable = function AdmissionTable({
   record,
@@ -21,6 +22,7 @@ const AdmissionTable = function AdmissionTable({
   record: SignOutRecord | null;
 }) {
   const navigate = useNavigate();
+  const today = dayjs();
   return (
     <TableContainer component={Paper} className="w-full border" elevation={0}>
       <Typography variant="h6" component="div" className="text-grey-700 p-4">
@@ -53,7 +55,9 @@ const AdmissionTable = function AdmissionTable({
               }
             >
               <TableCell>{admission.name}</TableCell>
-              <TableCell>{admission.dateOfBirth}</TableCell>
+              <TableCell>
+                {today.diff(dayjs(admission.dateOfBirth), "year").toString()}
+              </TableCell>
               <TableCell>{admission.admittingDiagnosis}</TableCell>
               <TableCell>{admission.location}</TableCell>
             </TableRow>
