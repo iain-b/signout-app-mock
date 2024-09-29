@@ -48,10 +48,10 @@ export const AEAdmissionForm = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3 className="text-2xl text-gray-700">Add A&E Admission</h3>
       <div className="grid grid-cols-12 gap-y-3">
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-3">
           <label htmlFor="patient-name">Name</label>
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-9">
           <TextField
             id="patient-name"
             size="small"
@@ -60,17 +60,17 @@ export const AEAdmissionForm = ({
           />
         </div>
 
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-3">
           <label htmlFor="location">Patient ID</label>
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-9">
           <TextField size="small" variant="outlined" {...register("id")} />
         </div>
 
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-3">
           <label htmlFor="location">Date of Birth</label>
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-9">
           <TextField
             size="small"
             variant="outlined"
@@ -78,10 +78,10 @@ export const AEAdmissionForm = ({
           />
         </div>
 
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-3">
           <label htmlFor="location">Location</label>
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-9">
           <TextField
             size="small"
             variant="outlined"
@@ -166,7 +166,7 @@ export const AEAdmissionForm = ({
         <div className="col-span-3">
           <Switch {...register("hasAnticoagulant")} />
         </div>
-        <div className="col-span-6">
+        <div className="lg:col-span-6 col-span-9 col-start-4">
           <Controller
             name="anticoagulantUsed"
             control={control}
@@ -204,7 +204,7 @@ export const AEAdmissionForm = ({
         <div className="col-span-3">
           <Switch {...register("hasAntiplatelet")} />
         </div>
-        <div className="col-span-6">
+        <div className="lg:col-span-6 col-span-9 col-start-4">
           <Controller
             name="antiplateletUsed"
             control={control}
@@ -241,13 +241,14 @@ export const AEAdmissionForm = ({
         <div className="col-span-3">
           <label htmlFor="location">Imaging</label>
         </div>
-        <div className="col-span-3 pr-4">
+        <div className="lg:col-span-3 col-span-9 pr-4">
           <Controller
             name="imaging"
             control={control}
             render={({ field: { onChange, value } }) => (
               <Autocomplete
-                options={["CT", "US", "Other", "Awaited", "None planned"]}
+                freeSolo
+                options={["CT", "US", "Awaited", "None planned"]}
                 value={value}
                 onChange={(event, newValue) => onChange(newValue)}
                 renderInput={(params) => (
@@ -267,16 +268,16 @@ export const AEAdmissionForm = ({
             Finalised Report
           </label>
         </div>
-        <div className="col-span-3">
+        <div className="col-span-9">
           <Switch {...register("isImagingFinalised")} />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-3">
           <label>Labs</label>
         </div>
-        <div className="col-span-1">
+        <div className="lg:col-span-1 col-span-3">
           <label>WCC</label>
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-6">
           <TextField
             id="lab-wcc"
             size="small"
@@ -287,10 +288,10 @@ export const AEAdmissionForm = ({
             {...register("labs.wcc")}
           />
         </div>
-        <div className="col-span-1">
+        <div className="lg:col-span- col-span-3 col-start-4">
           <label>CRP</label>
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-6">
           <TextField
             id="lab-wcc"
             size="small"
@@ -301,7 +302,7 @@ export const AEAdmissionForm = ({
             {...register("labs.crp")}
           />
         </div>
-        <div className="col-span-3 row-span-3">
+        <div className="col-span-3 lg:row-span-3 row-span-5">
           <label htmlFor="location">Plan</label>
         </div>
         <div className="col-span-9">
@@ -327,22 +328,22 @@ export const AEAdmissionForm = ({
             )}
           />
         </div>
-        <div className="col-span-1">
+        <div className="lg:col-span-1 col-span-6">
           <label htmlFor="location">Fasting</label>
         </div>
-        <div className="col-span-1">
+        <div className="lg:col-span-1 col-span-3">
           <Switch {...register("plan.fasting")} />
         </div>
-        <div className="col-span-2">
+        <div className="lg:col-span-2 col-span-6">
           <label htmlFor="location">IR Planned</label>
         </div>
-        <div className="col-span-1">
+        <div className="lg:col-span-1 col-span-3">
           <Switch {...register("plan.isIRPlanned")} />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-6">
           <label htmlFor="location">Surgical Intervention Planned</label>
         </div>
-        <div className="col-span-1">
+        <div className="lg:col-span-1 col-span-3">
           <Switch {...register("plan.isSurgicalInterventionPlanned")} />
         </div>
         <div className="col-span-9">
@@ -367,7 +368,7 @@ export const AEAdmissionForm = ({
         <div className="col-span-9">
           <Switch {...register("anticipatedComplexDischarge")} />
         </div>
-        <div className="col-span-12">
+        <div className="col-span-12 w-full">
           <Button type="submit" variant="contained" color="primary">
             Save Admission
           </Button>
