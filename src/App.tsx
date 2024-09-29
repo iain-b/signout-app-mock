@@ -124,11 +124,11 @@ function App() {
           MMUH Sugical Sign-Out
         </h2>
         <div className="grid grid-cols-2">
-          <div className="p-1">
+          <div className="p-1 col-span-2 lg:col-span-1">
             <EditableTable record={record} onChange={reloadData} />
           </div>
-          <div className="p-1">
-            <div className="overflow-x-auto">
+          <div className="p-1 col-span-2 lg:col-span-1">
+            <div>
               <table className="min-w-full table-auto border-collapse border border-gray-300">
                 <tbody>
                   <tr className="bg-blue-50 border-b">
