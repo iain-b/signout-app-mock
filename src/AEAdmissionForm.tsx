@@ -53,9 +53,9 @@ export const AEAdmissionForm = ({
     },
     mode: "onBlur",
   });
-  const [hasAnticoagulant, hasAntiplatelet, patientId, background] = useWatch({
+  const [hasAnticoagulant, hasAntiplatelet, patientId] = useWatch({
     control,
-    name: ["hasAnticoagulant", "hasAntiplatelet", "id", "background"],
+    name: ["hasAnticoagulant", "hasAntiplatelet", "id"],
   });
   const navigate = useNavigate();
   const client = useStorageClient();
@@ -208,11 +208,6 @@ export const AEAdmissionForm = ({
                 onChange={(event, newValue) =>
                   onChange(valueOrFreeText(newValue))
                 }
-                onInputChange={(e, newValue) => {
-                  if (e.type === "keydown") {
-                    onChange(valueOrFreeText([...background, newValue]));
-                  }
-                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
