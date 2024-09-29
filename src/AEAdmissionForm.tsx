@@ -33,6 +33,7 @@ export const AEAdmissionForm = ({
       dateOfBirth: "",
       background: [],
       imaging: "",
+      imagingSummary: "",
       isImagingFinalised: false,
       oe: "",
       hasAnticoagulant: false,
@@ -79,11 +80,12 @@ export const AEAdmissionForm = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3 className="text-2xl text-gray-700">Add A&E Admission</h3>
       <div className="grid grid-cols-12 gap-y-3">
-        <div className="lg:col-span-3 col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="patient-name">Name</label>
         </div>
-        <div className="lg:col-span-3 col-span-9">
+        <div className="lg:col-span-3 col-span-12 lg:pr-4">
           <TextField
+            className="w-full"
             id="patient-name"
             size="small"
             variant="outlined"
@@ -91,17 +93,22 @@ export const AEAdmissionForm = ({
           />
         </div>
 
-        <div className="lg:col-span-3 col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">Patient ID</label>
         </div>
-        <div className="lg:col-span-3 col-span-9">
-          <TextField size="small" variant="outlined" {...register("id")} />
+        <div className="lg:col-span-3 col-span-12">
+          <TextField
+            className="w-full"
+            size="small"
+            variant="outlined"
+            {...register("id")}
+          />
         </div>
 
-        <div className="lg:col-span-3 col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">Date of Birth</label>
         </div>
-        <div className="lg:col-span-3 col-span-9 pr-5">
+        <div className="lg:col-span-3 col-span-12 lg:pr-4">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Controller
               name="dateOfBirth"
@@ -113,6 +120,7 @@ export const AEAdmissionForm = ({
                   onChange={(newValue) => field.onChange(newValue)}
                   slotProps={{
                     textField: {
+                      className: "w-full",
                       size: "small",
                     },
                   }}
@@ -122,20 +130,21 @@ export const AEAdmissionForm = ({
           </LocalizationProvider>
         </div>
 
-        <div className="lg:col-span-3 col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">Location</label>
         </div>
-        <div className="lg:col-span-3 col-span-9">
+        <div className="lg:col-span-3 col-span-12">
           <TextField
             size="small"
             variant="outlined"
+            className="w-full"
             {...register("location")}
           />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="admitting-diagnosis">Admitting Diagnosis</label>
         </div>
-        <div className="col-span-9">
+        <div className="lg:col-span-9 col-span-12">
           <Controller
             name="admittingDiagnosis"
             control={control}
@@ -172,10 +181,10 @@ export const AEAdmissionForm = ({
             )}
           />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">Background</label>
         </div>
-        <div className="col-span-9">
+        <div className="lg:col-span-9 col-span-12">
           <Controller
             name="background"
             control={control}
@@ -210,7 +219,7 @@ export const AEAdmissionForm = ({
             )}
           />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">Anticoagulant</label>
         </div>
         <div className="col-span-3">
@@ -248,7 +257,7 @@ export const AEAdmissionForm = ({
           />
         </div>
 
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">Antiplatelet</label>
         </div>
         <div className="col-span-3">
@@ -285,10 +294,10 @@ export const AEAdmissionForm = ({
             )}
           />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">O/E</label>
         </div>
-        <div className="col-span-9">
+        <div className="lg:col-span-9 col-span-12">
           <TextField
             className="w-full"
             size="small"
@@ -296,10 +305,10 @@ export const AEAdmissionForm = ({
             {...register("oe")}
           />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-12">
           <label htmlFor="location">Imaging</label>
         </div>
-        <div className="lg:col-span-3 col-span-9 pr-4">
+        <div className="lg:col-span-3 col-span-12 pr-4">
           <Controller
             name="imaging"
             control={control}
@@ -329,49 +338,62 @@ export const AEAdmissionForm = ({
             )}
           />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3 col-span-6">
           <label className="pl-1" htmlFor="isImagingFinalised">
             Finalised Report
           </label>
         </div>
-        <div className="lg:col-span-3 col-span-9">
+        <div className="lg:col-span-3 col-span-6">
           <Switch {...register("isImagingFinalised")} />
         </div>
-        <div className="lg:col-span-3 col-span-3">
+
+        <div className="lg:col-span-9 lg:col-start-4 col-span-12 pr-4">
+          <TextField
+            id="imaging-summary"
+            size="small"
+            variant="outlined"
+            className="w-full"
+            placeholder="Imaging report summary"
+            {...register("imagingSummary")}
+          />
+        </div>
+        <div className="lg:col-span-3 col-span-12">
           <label>Labs</label>
         </div>
         <div className="lg:col-span-1 col-span-3">
           <label>WCC</label>
         </div>
-        <div className="lg:col-span-3 col-span-6">
+        <div className="lg:col-span-3 col-span-9 lg:pr-4">
           <TextField
             id="lab-wcc"
             size="small"
             variant="outlined"
             placeholder="WCC"
+            className="w-full"
             inputProps={{ step: "0.01" }}
             type="number"
             {...register("labs.wcc")}
           />
         </div>
-        <div className="lg:col-span-1 col-span-3 col-start-4">
+        <div className="lg:col-span-1 col-span-3">
           <label>CRP</label>
         </div>
-        <div className="lg:col-span-3 col-span-6">
+        <div className="lg:col-span-3 col-span-9">
           <TextField
             id="lab-wcc"
             size="small"
             variant="outlined"
             placeholder="CRP"
+            className="w-full"
             type="number"
             inputProps={{ step: "0.1" }}
             {...register("labs.crp")}
           />
         </div>
-        <div className="col-span-3 lg:row-span-3 row-span-5">
+        <div className="col-span-12 lg:row-span-3 lg:col-span-3">
           <label htmlFor="location">Plan</label>
         </div>
-        <div className="col-span-9">
+        <div className="lg:col-span-9 col-span-12">
           <Controller
             name="plan.antibiotics"
             control={control}
@@ -421,7 +443,7 @@ export const AEAdmissionForm = ({
         <div className="lg:col-span-1 col-span-3">
           <Switch {...register("plan.isSurgicalInterventionPlanned")} />
         </div>
-        <div className="col-span-9">
+        <div className="lg:col-span-9 col-span-12">
           <TextField
             id="plan-comments"
             size="small"

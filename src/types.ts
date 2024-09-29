@@ -11,6 +11,7 @@ export type AEAdmission = {
   antiplateletUsed?: string;
   oe: string;
   imaging: string;
+  imagingSummary: string;
   isImagingFinalised: boolean;
   labs: { wcc: number; crp: number };
   plan: {
