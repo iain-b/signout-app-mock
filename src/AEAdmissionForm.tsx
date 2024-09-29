@@ -54,9 +54,9 @@ export const AEAdmissionForm = ({
       },
       mode: "onBlur",
     });
-  const [hasAnticoagulant, hasAntiplatelet, patientId, background] = useWatch({
+  const [hasAnticoagulant, hasAntiplatelet, patientId] = useWatch({
     control,
-    name: ["hasAnticoagulant", "hasAntiplatelet", "id", "background"],
+    name: ["hasAnticoagulant", "hasAntiplatelet", "id"],
   });
   const navigate = useNavigate();
   const client = useStorageClient();
