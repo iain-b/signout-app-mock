@@ -3,15 +3,7 @@ import "./App.css";
 import { AEAdmissionForm } from "./AEAdmissionForm";
 import { StorageClient } from "./storage";
 import { AEAdmission, SignOutRecord } from "./types";
-import { IconButton } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
-import { StaffTable } from "./StaffTable";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ActivitySummary } from "./ActivitySummary";
 
 export const useStorageClient = () => new StorageClient();
