@@ -24,39 +24,38 @@ export const AEAdmissionForm = ({
 }: {
   onSave: (admission: AEAdmission) => void;
 }) => {
-  const { register, handleSubmit, getValues, setValue, control, reset } =
-    useForm<AEAdmission>({
-      defaultValues: {
-        admittingDiagnosis: "",
-        name: "",
-        id: "",
-        location: "",
-        dateOfBirth: "",
-        background: [],
-        imaging: "",
-        imagingSummary: "",
-        isImagingFinalised: false,
-        oe: "",
-        hasAnticoagulant: false,
-        hasAntiplatelet: false,
-        anticoagulantUsed: "",
-        antiplateletUsed: "",
-        anticipatedComplexDischarge: false,
-        plan: {
-          antibiotics: [],
-          isIRPlanned: false,
-          comments: "",
-          fasting: false,
-          isHduOrIcuAdmission: false,
-          isSurgicalInterventionPlanned: false,
-        },
-        labs: { wcc: 0, crp: 0 },
+  const { register, handleSubmit, control, reset } = useForm<AEAdmission>({
+    defaultValues: {
+      admittingDiagnosis: "",
+      name: "",
+      id: "",
+      location: "",
+      dateOfBirth: "",
+      background: [],
+      imaging: "",
+      imagingSummary: "",
+      isImagingFinalised: false,
+      oe: "",
+      hasAnticoagulant: false,
+      hasAntiplatelet: false,
+      anticoagulantUsed: "",
+      antiplateletUsed: "",
+      anticipatedComplexDischarge: false,
+      plan: {
+        antibiotics: [],
+        isIRPlanned: false,
+        comments: "",
+        fasting: false,
+        isHduOrIcuAdmission: false,
+        isSurgicalInterventionPlanned: false,
       },
-      mode: "onBlur",
-    });
-  const [hasAnticoagulant, hasAntiplatelet, patientId] = useWatch({
+      labs: { wcc: 0, crp: 0 },
+    },
+    mode: "onBlur",
+  });
+  const [hasAnticoagulant, hasAntiplatelet, patientId, background] = useWatch({
     control,
-    name: ["hasAnticoagulant", "hasAntiplatelet", "id"],
+    name: ["hasAnticoagulant", "hasAntiplatelet", "id", "background"],
   });
   const navigate = useNavigate();
   const client = useStorageClient();
@@ -78,16 +77,6 @@ export const AEAdmissionForm = ({
     navigate("/");
   };
 
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLDivElement>,
-    inputValue: string,
-  ) => {
-    if (event.key === "Enter" && inputValue) {
-      event.preventDefault(); // Prevent default Enter behavior
-      const currentItems = getValues("background") || [];
-      setValue("background", [...currentItems, inputValue]);
-    }
-  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3 className="text-2xl text-gray-700">Add A&E Admission</h3>
@@ -219,15 +208,17 @@ export const AEAdmissionForm = ({
                 onChange={(event, newValue) =>
                   onChange(valueOrFreeText(newValue))
                 }
+                onInputChange={(e, newValue) => {
+                  if (e.type === "keydown") {
+                    onChange(valueOrFreeText([...background, newValue]));
+                  }
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Select or type conditions"
                     variant="outlined"
                     size="small"
-                    onKeyDown={(event) =>
-                      handleKeyDown(event, params.inputProps.value as string)
-                    }
                   />
                 )}
               />
