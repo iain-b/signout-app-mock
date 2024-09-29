@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/signout-app-mock/static/css/main.ce4bb918.css",
-    "main.js": "/signout-app-mock/static/js/main.429b8ca3.js",
+    "main.js": "/signout-app-mock/static/js/main.848d9b30.js",
     "static/js/453.e804cb6f.chunk.js": "/signout-app-mock/static/js/453.e804cb6f.chunk.js",
     "index.html": "/signout-app-mock/index.html",
     "main.ce4bb918.css.map": "/signout-app-mock/static/css/main.ce4bb918.css.map",
-    "main.429b8ca3.js.map": "/signout-app-mock/static/js/main.429b8ca3.js.map",
+    "main.848d9b30.js.map": "/signout-app-mock/static/js/main.848d9b30.js.map",
     "453.e804cb6f.chunk.js.map": "/signout-app-mock/static/js/453.e804cb6f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ce4bb918.css",
-    "static/js/main.429b8ca3.js"
+    "static/js/main.848d9b30.js"
   ]
 }
