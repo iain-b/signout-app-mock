@@ -1,9 +1,12 @@
-export type AEAdmission = {
-  admittingDiagnosis: string;
+export type PatientDetails = {
   name: string;
   id: string;
   location: string;
   dateOfBirth: string;
+};
+
+export type AEAdmission = PatientDetails & {
+  admittingDiagnosis: string;
   background: string[];
   hasAnticoagulant: boolean;
   anticoagulantUsed?: string;
@@ -25,13 +28,19 @@ export type AEAdmission = {
   anticipatedComplexDischarge: boolean;
 };
 
+export type OperationRecord = PatientDetails & {
+  procedure: string;
+  findings: string;
+  plan: string;
+};
+
 export type SignOutRecord = {
   consultant: string;
   sho: string;
   registrar: string;
   AEAdmissions: AEAdmission[];
   HduOrIcuAdmissions: AEAdmission[];
-  operations: object[];
+  operations: OperationRecord[];
   AEDischarges: object[];
   AEConsults: object[];
   referrals: object[];

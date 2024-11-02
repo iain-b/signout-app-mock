@@ -30,7 +30,7 @@ export const AEAdmissionForm = ({
       name: "",
       id: "",
       location: "",
-      dateOfBirth: "",
+      dateOfBirth: new Date().toString(),
       background: [],
       imaging: "",
       imagingSummary: "",

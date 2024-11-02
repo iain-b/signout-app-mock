@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import { AEAdmissionForm } from "./AEAdmissionForm";
 import { StorageClient } from "./storage";
-import { AEAdmission, SignOutRecord } from "./types";
+import { AEAdmission, OperationRecord, SignOutRecord } from "./types";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { ActivitySummary } from "./ActivitySummary";
+import { OperationForm } from "./OperationForm";
 
 export const useStorageClient = () => new StorageClient();
 
@@ -24,6 +25,13 @@ function App() {
     },
     [reloadData, client],
   );
+  const saveOperation = useCallback(
+    (operation: OperationRecord) => {
+      client.saveOperation(operation);
+      reloadData();
+    },
+    [reloadData, client],
+  );
   return (
     <div className="bg-blue-50">
       <div className="max-w-4xl mx-auto px-4 bg-white">
@@ -31,6 +39,7 @@ function App() {
           {" "}
           MMUH Surgical Sign-Out
         </h2>
+        <hr />
         <Router>
           <Routes>
             <Route
@@ -42,6 +51,10 @@ function App() {
             <Route
               path="/new-admission"
               element={<AEAdmissionForm onSave={saveAdmission} />}
+            ></Route>
+            <Route
+              path="/new-operation"
+              element={<OperationForm onSave={saveOperation} />}
             ></Route>
           </Routes>
         </Router>

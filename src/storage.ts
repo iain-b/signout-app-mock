@@ -1,4 +1,4 @@
-import { AEAdmission, SignOutRecord } from "./types";
+import { AEAdmission, OperationRecord, SignOutRecord } from "./types";
 
 // These should really be async
 interface StorageAPI {
@@ -43,6 +43,20 @@ export class StorageClient implements StorageAPI {
       currentRecord.AEAdmissions[existingIndex] = admission;
     } else {
       currentRecord.AEAdmissions.push(admission);
+    }
+    localStorage.setItem(SIGN_OUT_RECORD_KEY, JSON.stringify(currentRecord));
+  }
+
+  saveOperation(operation: OperationRecord): void {
+    const currentRecord = this.getCurrentRecord();
+    // the ID field is the patient ID which I've used here for convenience but probably a uuid for each event is needed
+    const existingIndex = currentRecord.operations.findIndex(
+      (it) => it.id === operation.id,
+    );
+    if (existingIndex >= 0) {
+      currentRecord.operations[existingIndex] = operation;
+    } else {
+      currentRecord.operations.push(operation);
     }
     localStorage.setItem(SIGN_OUT_RECORD_KEY, JSON.stringify(currentRecord));
   }

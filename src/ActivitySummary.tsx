@@ -18,26 +18,30 @@ import dayjs from "dayjs";
 
 const AdmissionTable = function AdmissionTable({
   record,
+  title = "A&E Admissions",
+  newItemPath = "new-admission",
 }: {
   record: SignOutRecord | null;
+  title?: string;
+  newItemPath?: string;
 }) {
   const navigate = useNavigate();
   const today = dayjs();
   return (
     <TableContainer component={Paper} className="w-full border" elevation={0}>
       <Typography variant="h6" component="div" className="text-grey-700 p-4">
-        A&E Admissions
+        {title}
       </Typography>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>
+            <TableCell sx={{ width: "30%" }}>
               <b className="text-gray-700">Name</b>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ width: "20%" }}>
               <b className="text-gray-700">D.O.B</b>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ width: "50%" }}>
               <b className="text-gray-700">Diagnosis</b>
             </TableCell>
           </TableRow>
@@ -48,7 +52,7 @@ const AdmissionTable = function AdmissionTable({
               key={admission.id}
               className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
               onClick={() =>
-                navigate(`/new-admission?patientId=${admission.id}`)
+                navigate(`/${newItemPath}?patientId=${admission.id}`)
               }
             >
               <TableCell>{admission.name}</TableCell>
@@ -56,6 +60,54 @@ const AdmissionTable = function AdmissionTable({
                 {today.diff(dayjs(admission.dateOfBirth), "year").toString()}
               </TableCell>
               <TableCell>{admission.admittingDiagnosis}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+const OperationsTable = function OperationsTable({
+  record,
+}: {
+  record: SignOutRecord | null;
+}) {
+  const navigate = useNavigate();
+  const today = dayjs();
+  return (
+    <TableContainer component={Paper} className="w-full border" elevation={0}>
+      <Typography variant="h6" component="div" className="text-grey-700 p-4">
+        Operations
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ width: "30%" }}>
+              <b className="text-gray-700">Name</b>
+            </TableCell>
+            <TableCell sx={{ width: "20%" }}>
+              <b className="text-gray-700">D.O.B</b>
+            </TableCell>
+            <TableCell sx={{ width: "50%" }}>
+              <b className="text-gray-700">Procedure</b>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {record?.operations?.map((operation, index) => (
+            <TableRow
+              key={operation.id}
+              className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
+              onClick={() =>
+                navigate(`/new-operation?patientId=${operation.id}`)
+              }
+            >
+              <TableCell>{operation.name}</TableCell>
+              <TableCell>
+                {today.diff(dayjs(operation.dateOfBirth), "year").toString()}
+              </TableCell>
+              <TableCell>{operation.procedure}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -89,7 +141,12 @@ export const ActivitySummary = ({
                   {record?.operations?.length ?? 0}
                 </td>
                 <td className="px-6 py-3 text-sm text-gray-900 text-right">
-                  <IconButton color="default" aria-label="add" size="small">
+                  <IconButton
+                    color="default"
+                    aria-label="add"
+                    size="small"
+                    onClick={() => navigate("/new-operation")}
+                  >
                     <AddIcon />
                   </IconButton>
                 </td>
@@ -195,6 +252,9 @@ export const ActivitySummary = ({
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="p-1 col-span-2">
+        <OperationsTable record={record} />
       </div>
       <div className="p-1 col-span-2">
         <AdmissionTable record={record} />
