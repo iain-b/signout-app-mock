@@ -470,7 +470,7 @@ export const AEAdmissionForm = ({
         </div>
         <div className="col-span-12 w-full">
           <Button type="submit" variant="contained" color="primary">
-            Save Admission
+            Save
           </Button>
         </div>
       </div>
