@@ -12,16 +12,16 @@ import {
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import React from "react";
-import { SignOutRecord } from "./types";
+import { AEAdmission, SignOutRecord } from "./types";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 const AdmissionTable = function AdmissionTable({
-  record,
+  records,
   title = "A&E Admissions",
   newItemPath = "new-admission",
 }: {
-  record: SignOutRecord | null;
+  records: AEAdmission[] | undefined;
   title?: string;
   newItemPath?: string;
 }) {
@@ -47,7 +47,7 @@ const AdmissionTable = function AdmissionTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {record?.AEAdmissions?.map((admission, index) => (
+          {records?.map((admission, index) => (
             <TableRow
               key={admission.id}
               className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
@@ -192,7 +192,12 @@ export const ActivitySummary = ({
                   {record?.AEDischarges?.length ?? 0}
                 </td>
                 <td className="px-6 py-3 text-sm text-gray-900 text-right">
-                  <IconButton color="default" aria-label="add" size="small">
+                  <IconButton
+                    color="default"
+                    aria-label="add"
+                    size="small"
+                    onClick={() => navigate("/new-discharge")}
+                  >
                     <AddIcon />
                   </IconButton>
                 </td>
@@ -205,7 +210,12 @@ export const ActivitySummary = ({
                   {record?.AEConsults?.length ?? 0}
                 </td>
                 <td className="px-6 py-3 text-sm text-gray-900 text-right">
-                  <IconButton color="default" aria-label="add" size="small">
+                  <IconButton
+                    color="default"
+                    aria-label="add"
+                    size="small"
+                    onClick={() => navigate("/new-consult")}
+                  >
                     <AddIcon />
                   </IconButton>
                 </td>
@@ -218,7 +228,12 @@ export const ActivitySummary = ({
                   {record?.referrals?.length ?? 0}
                 </td>
                 <td className="px-6 py-3 text-sm text-gray-900 text-right">
-                  <IconButton color="default" aria-label="add" size="small">
+                  <IconButton
+                    color="default"
+                    aria-label="add"
+                    size="small"
+                    onClick={() => navigate("/new-referral")}
+                  >
                     <AddIcon />
                   </IconButton>
                 </td>
@@ -231,7 +246,12 @@ export const ActivitySummary = ({
                   {record?.inHouseConsults?.length ?? 0}
                 </td>
                 <td className="px-6 py-3 text-sm text-gray-900 text-right">
-                  <IconButton color="default" aria-label="add" size="small">
+                  <IconButton
+                    color="default"
+                    aria-label="add"
+                    size="small"
+                    onClick={() => navigate("/new-in-house-consult")}
+                  >
                     <AddIcon />
                   </IconButton>
                 </td>
@@ -244,7 +264,12 @@ export const ActivitySummary = ({
                   {record?.floorIssues?.length ?? 0}
                 </td>
                 <td className="px-6 py-3 text-sm text-gray-900 text-right">
-                  <IconButton color="default" aria-label="add" size="small">
+                  <IconButton
+                    color="default"
+                    aria-label="add"
+                    size="small"
+                    onClick={() => navigate("/new-floor-issue")}
+                  >
                     <AddIcon />
                   </IconButton>
                 </td>
@@ -257,7 +282,42 @@ export const ActivitySummary = ({
         <OperationsTable record={record} />
       </div>
       <div className="p-1 col-span-2">
-        <AdmissionTable record={record} />
+        <AdmissionTable records={record?.AEAdmissions} />
+      </div>
+      <div className="p-1 col-span-2">
+        <AdmissionTable
+          records={record?.AEDischarges}
+          title="A&E Discharges"
+          newItemPath="new-discharge"
+        />
+      </div>
+      <div className="p-1 col-span-2">
+        <AdmissionTable
+          records={record?.AEConsults}
+          title="A&E Consults"
+          newItemPath="new-consult"
+        />
+      </div>
+      <div className="p-1 col-span-2">
+        <AdmissionTable
+          records={record?.referrals}
+          title="Referrals to Medical Team"
+          newItemPath="new-referral"
+        />
+      </div>
+      <div className="p-1 col-span-2">
+        <AdmissionTable
+          records={record?.inHouseConsults}
+          title="In House Consults"
+          newItemPath="new-in-house-consult"
+        />
+      </div>
+      <div className="p-1 col-span-2">
+        <AdmissionTable
+          records={record?.floorIssues}
+          title="Floor Issues"
+          newItemPath="new-floor-issues"
+        />
       </div>
     </div>
   );

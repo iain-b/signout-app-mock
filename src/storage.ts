@@ -1,4 +1,9 @@
-import { AEAdmission, OperationRecord, SignOutRecord } from "./types";
+import {
+  AdmissionRecords,
+  AEAdmission,
+  OperationRecord,
+  SignOutRecord,
+} from "./types";
 
 // These should really be async
 interface StorageAPI {
@@ -7,6 +12,13 @@ interface StorageAPI {
   setConsultant: (name: string) => void;
   setSHO: (name: string) => void;
   setRegistrar: (name: string) => void;
+  saveHduOrIcuAdmission: (admission: AEAdmission) => void;
+  saveAEDischarge: (discharge: AEAdmission) => void;
+  saveAEConsult: (consult: AEAdmission) => void;
+  saveReferral: (referral: AEAdmission) => void;
+  saveInHouseConsult: (consult: AEAdmission) => void;
+  saveFloorIssue: (issue: AEAdmission) => void;
+  saveOperation: (operation: OperationRecord) => void;
 }
 
 const SIGN_OUT_RECORD_KEY = "signOutRecord";
@@ -33,16 +45,47 @@ export class StorageClient implements StorageAPI {
     }
   }
 
+  saveHduOrIcuAdmission(admission: AEAdmission): void {
+    this.saveRecord(
+      { ...admission, plan: { ...admission.plan, isHduOrIcuAdmission: true } },
+      "HduOrIcuAdmissions",
+    );
+  }
+
+  saveAEDischarge(discharge: AEAdmission): void {
+    this.saveRecord(discharge, "AEDischarges");
+  }
+
+  saveAEConsult(consult: AEAdmission): void {
+    this.saveRecord(consult, "AEConsults");
+  }
+
+  saveReferral(referral: AEAdmission): void {
+    this.saveRecord(referral, "referrals");
+  }
+
+  saveInHouseConsult(consult: AEAdmission): void {
+    this.saveRecord(consult, "inHouseConsults");
+  }
+
+  saveFloorIssue(issue: AEAdmission): void {
+    this.saveRecord(issue, "floorIssues");
+  }
+
   saveAEAdmission(admission: AEAdmission): void {
-    const currentRecord = this.getCurrentRecord();
+    this.saveRecord(admission, "AEAdmissions");
+  }
+
+  private saveRecord(record: AEAdmission, type: keyof AdmissionRecords): void {
+    const currentRecord = this.getCurrentRecord() as AdmissionRecords;
     // the ID field is the patient ID which I've used here for convenience but probably a uuid for each event is needed
-    const existingIndex = currentRecord.AEAdmissions.findIndex(
-      (it) => it.id === admission.id,
+    const existingIndex = currentRecord[type].findIndex(
+      (it) => it.id === record.id,
     );
     if (existingIndex >= 0) {
-      currentRecord.AEAdmissions[existingIndex] = admission;
+      currentRecord[type][existingIndex] = record;
     } else {
-      currentRecord.AEAdmissions.push(admission);
+      currentRecord[type].push(record);
     }
     localStorage.setItem(SIGN_OUT_RECORD_KEY, JSON.stringify(currentRecord));
   }

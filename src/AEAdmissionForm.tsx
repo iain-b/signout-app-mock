@@ -21,8 +21,10 @@ function valueOrFreeText(
 
 export const AEAdmissionForm = ({
   onSave,
+  title = "Add A&E Admission",
 }: {
   onSave: (admission: AEAdmission) => void;
+  title?: string;
 }) => {
   const { register, handleSubmit, control, reset } = useForm<AEAdmission>({
     defaultValues: {
@@ -79,7 +81,7 @@ export const AEAdmissionForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="text-2xl text-gray-700">Add A&E Admission</h3>
+      <h3 className="text-2xl text-gray-700 pt-4 pb-4">{title}</h3>
       <div className="grid grid-cols-12 gap-y-3">
         <div className="lg:col-span-3 col-span-12">
           <label htmlFor="patient-name">Name</label>

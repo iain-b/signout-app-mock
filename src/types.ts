@@ -38,12 +38,16 @@ export type SignOutRecord = {
   consultant: string;
   sho: string;
   registrar: string;
+  operations: OperationRecord[];
+} & AdmissionRecords;
+
+// The semantics around "admission" are wrong but rolling with it for now
+export type AdmissionRecords = {
   AEAdmissions: AEAdmission[];
   HduOrIcuAdmissions: AEAdmission[];
-  operations: OperationRecord[];
-  AEDischarges: object[];
-  AEConsults: object[];
-  referrals: object[];
-  inHouseConsults: object[];
-  floorIssues: object[];
+  AEDischarges: AEAdmission[];
+  AEConsults: AEAdmission[];
+  referrals: AEAdmission[];
+  inHouseConsults: AEAdmission[];
+  floorIssues: AEAdmission[];
 };
