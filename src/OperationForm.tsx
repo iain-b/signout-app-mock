@@ -73,7 +73,7 @@ export const OperationForm = ({
             id="patient-name"
             size="small"
             variant="outlined"
-            {...register("name")}
+            {...register("name", { required: true })}
           />
         </div>
 
@@ -85,7 +85,7 @@ export const OperationForm = ({
             className="w-full"
             size="small"
             variant="outlined"
-            {...register("id")}
+            {...register("id", { required: true })}
           />
         </div>
 

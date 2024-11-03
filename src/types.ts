@@ -16,7 +16,34 @@ export type AEAdmission = PatientDetails & {
   imaging: string;
   imagingSummary: string;
   isImagingFinalised: boolean;
-  labs: { wcc: number; crp: number };
+  labs: {
+    wcc: number;
+    crp: number;
+    amylase?: number;
+    INR?: number;
+    hb?: number;
+    Na?: number;
+    K?: number;
+    lactate?: number;
+    creatinine?: number;
+    urea?: number;
+    bilirubin?: number;
+    ALT?: number;
+    ALP?: number;
+    GGT?: number;
+    HCG?: boolean;
+  };
+  labsPerformed: (
+    | "Amylase"
+    | "INR"
+    | "Hb"
+    | "Na"
+    | "K"
+    | "Lactate"
+    | "RenalFx"
+    | "LFT"
+    | "HCG"
+  )[];
   plan: {
     antibiotics: string[];
     fasting: boolean;

@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { Autocomplete, Button, Switch, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Divider,
+  Switch,
+  TextField,
+} from "@mui/material";
 import { AEAdmission } from "./types";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useStorageClient } from "./App";
@@ -51,14 +57,16 @@ export const AEAdmissionForm = ({
         isHduOrIcuAdmission: false,
         isSurgicalInterventionPlanned: false,
       },
-      labs: { wcc: 0, crp: 0 },
+      labs: { wcc: 0, crp: 0, amylase: 0 },
+      labsPerformed: [],
     },
     mode: "onBlur",
   });
-  const [hasAnticoagulant, hasAntiplatelet, patientId] = useWatch({
-    control,
-    name: ["hasAnticoagulant", "hasAntiplatelet", "id"],
-  });
+  const [hasAnticoagulant, hasAntiplatelet, patientId, labsPerformed] =
+    useWatch({
+      control,
+      name: ["hasAnticoagulant", "hasAntiplatelet", "id", "labsPerformed"],
+    });
   const navigate = useNavigate();
   const client = useStorageClient();
   const [searchParams] = useSearchParams();
@@ -92,7 +100,7 @@ export const AEAdmissionForm = ({
             id="patient-name"
             size="small"
             variant="outlined"
-            {...register("name")}
+            {...register("name", { required: true })}
           />
         </div>
 
@@ -104,7 +112,7 @@ export const AEAdmissionForm = ({
             className="w-full"
             size="small"
             variant="outlined"
-            {...register("id")}
+            {...register("id", { required: true })}
           />
         </div>
 
@@ -392,6 +400,250 @@ export const AEAdmissionForm = ({
             inputProps={{ step: "0.1" }}
             {...register("labs.crp")}
           />
+        </div>
+        <div className="lg:col-start-4 lg:col-span-9 col-span-12">
+          <Controller
+            name="labsPerformed"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                multiple
+                options={[
+                  "Amylase",
+                  "INR",
+                  "Hb",
+                  "Na",
+                  "K",
+                  "Lactate",
+                  "RenalFx",
+                  "LFT",
+                  "HCG",
+                ]}
+                value={value}
+                onChange={(event, newValue) => onChange(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select tests performed"
+                    variant="outlined"
+                    size="small"
+                  />
+                )}
+              />
+            )}
+          />
+        </div>
+        <div className="lg:col-start-4 lg:col-span-9 col-span-12">
+          <div className="grid grid-cols-6 gap-1">
+            {labsPerformed?.includes("Amylase") && (
+              <>
+                <div className="col-span-1">
+                  <label>Amylase</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-amylase"
+                    size="small"
+                    variant="outlined"
+                    placeholder="Amylase"
+                    type="number"
+                    {...register("labs.amylase")}
+                  />
+                </div>
+              </>
+            )}
+
+            {labsPerformed?.includes("INR") && (
+              <>
+                <div className="col-span-1">
+                  <label>INR</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-INR"
+                    size="small"
+                    variant="outlined"
+                    placeholder="INR"
+                    type="number"
+                    {...register("labs.INR")}
+                  />
+                </div>
+              </>
+            )}
+
+            {labsPerformed?.includes("Hb") && (
+              <>
+                <div className="col-span-1">
+                  <label>hb</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-hb"
+                    size="small"
+                    variant="outlined"
+                    placeholder="hb"
+                    inputProps={{ step: "0.1" }}
+                    type="number"
+                    {...register("labs.hb")}
+                  />
+                </div>
+              </>
+            )}
+
+            {labsPerformed?.includes("Na") && (
+              <>
+                <div className="col-span-1">
+                  <label>Na</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-Na"
+                    size="small"
+                    variant="outlined"
+                    placeholder="Na"
+                    type="number"
+                    {...register("labs.Na")}
+                  />
+                </div>
+              </>
+            )}
+
+            {labsPerformed?.includes("K") && (
+              <>
+                <div className="col-span-1">
+                  <label>K</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-K"
+                    size="small"
+                    variant="outlined"
+                    placeholder="K"
+                    type="number"
+                    {...register("labs.K")}
+                  />
+                </div>
+              </>
+            )}
+
+            {labsPerformed?.includes("Lactate") && (
+              <>
+                <div className="col-span-1">
+                  <label>lactate</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-lactate"
+                    size="small"
+                    variant="outlined"
+                    placeholder="lactate"
+                    inputProps={{ step: "0.1" }}
+                    type="number"
+                    {...register("labs.lactate")}
+                  />
+                </div>
+              </>
+            )}
+
+            {labsPerformed?.includes("RenalFx") && (
+              <>
+                <div className="col-span-1">
+                  <label>Creatinine</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-creatinine"
+                    size="small"
+                    variant="outlined"
+                    placeholder="Creatinine"
+                    type="number"
+                    {...register("labs.creatinine")}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <label>Urea</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-urea"
+                    size="small"
+                    variant="outlined"
+                    placeholder="Urea"
+                    type="number"
+                    {...register("labs.urea")}
+                  />
+                </div>
+              </>
+            )}
+
+            {labsPerformed?.includes("LFT") && (
+              <>
+                <div className="col-span-1">
+                  <label>Bilirubin</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-bilirubin"
+                    size="small"
+                    variant="outlined"
+                    placeholder="Bilirubin"
+                    type="number"
+                    {...register("labs.bilirubin")}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <label>ALT</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-alt"
+                    size="small"
+                    variant="outlined"
+                    placeholder="ALT"
+                    type="number"
+                    {...register("labs.ALT")}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <label>ALP</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-alp"
+                    size="small"
+                    variant="outlined"
+                    placeholder="ALP"
+                    type="number"
+                    {...register("labs.ALP")}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <label>GGT</label>
+                </div>
+                <div className="col-span-2">
+                  <TextField
+                    id="lab-ggt"
+                    size="small"
+                    variant="outlined"
+                    placeholder="GGT"
+                    type="number"
+                    {...register("labs.GGT")}
+                  />
+                </div>
+              </>
+            )}
+            {labsPerformed?.includes("HCG") && (
+              <>
+                <div className="col-span-1">
+                  <label>HCG</label>
+                </div>
+
+                <div className="col-span-2">
+                  <Switch {...register("labs.HCG")} />
+                </div>
+              </>
+            )}
+          </div>
         </div>
         <div className="col-span-12 lg:row-span-3 lg:col-span-3">
           <label htmlFor="location">Plan</label>

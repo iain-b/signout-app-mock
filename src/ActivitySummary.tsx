@@ -39,7 +39,7 @@ const AdmissionTable = function AdmissionTable({
               <b className="text-gray-700">Name</b>
             </TableCell>
             <TableCell sx={{ width: "20%" }}>
-              <b className="text-gray-700">D.O.B</b>
+              <b className="text-gray-700">Age</b>
             </TableCell>
             <TableCell sx={{ width: "50%" }}>
               <b className="text-gray-700">Diagnosis</b>
@@ -55,7 +55,12 @@ const AdmissionTable = function AdmissionTable({
                 navigate(`/${newItemPath}?patientId=${admission.id}`)
               }
             >
-              <TableCell>{admission.name}</TableCell>
+              <TableCell>
+                {admission.name
+                  .split(" ")
+                  .map((it) => it[0])
+                  .join("")}
+              </TableCell>
               <TableCell>
                 {today.diff(dayjs(admission.dateOfBirth), "year").toString()}
               </TableCell>
@@ -103,7 +108,12 @@ const OperationsTable = function OperationsTable({
                 navigate(`/new-operation?patientId=${operation.id}`)
               }
             >
-              <TableCell>{operation.name}</TableCell>
+              <TableCell>
+                {operation.name
+                  .split(" ")
+                  .map((it) => it[0])
+                  .join("")}
+              </TableCell>
               <TableCell>
                 {today.diff(dayjs(operation.dateOfBirth), "year").toString()}
               </TableCell>
@@ -169,7 +179,7 @@ export const ActivitySummary = ({
                   </IconButton>
                 </td>
               </tr>
-              <tr className="bg-white border-b">
+              <tr className="bg-blue-50 border-b">
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
                   ICU/HDU Admissions
                 </th>
@@ -184,7 +194,7 @@ export const ActivitySummary = ({
                   </IconButton>
                 </td>
               </tr>
-              <tr className="bg-blue-50 border-b">
+              <tr className="bg-white border-b">
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
                   A + E Discharges
                 </th>
@@ -202,7 +212,7 @@ export const ActivitySummary = ({
                   </IconButton>
                 </td>
               </tr>
-              <tr className="bg-white border-b">
+              <tr className="bg-blue-50 border-b">
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
                   A + E Consults
                 </th>
@@ -220,7 +230,7 @@ export const ActivitySummary = ({
                   </IconButton>
                 </td>
               </tr>
-              <tr className="bg-blue-50 border-b">
+              <tr className="bg-white border-b">
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
                   Referrals to Medical Team
                 </th>
@@ -238,7 +248,7 @@ export const ActivitySummary = ({
                   </IconButton>
                 </td>
               </tr>
-              <tr className="bg-white border-b">
+              <tr className="bg-blue-50 border-b">
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
                   In House Consults
                 </th>
@@ -256,7 +266,7 @@ export const ActivitySummary = ({
                   </IconButton>
                 </td>
               </tr>
-              <tr className="bg-blue-50">
+              <tr className="bg-white">
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">
                   Floor Issues
                 </th>
@@ -278,47 +288,61 @@ export const ActivitySummary = ({
           </table>
         </div>
       </div>
-      <div className="p-1 col-span-2">
-        <OperationsTable record={record} />
-      </div>
-      <div className="p-1 col-span-2">
-        <AdmissionTable records={record?.AEAdmissions} />
-      </div>
-      <div className="p-1 col-span-2">
-        <AdmissionTable
-          records={record?.AEDischarges}
-          title="A&E Discharges"
-          newItemPath="new-discharge"
-        />
-      </div>
-      <div className="p-1 col-span-2">
-        <AdmissionTable
-          records={record?.AEConsults}
-          title="A&E Consults"
-          newItemPath="new-consult"
-        />
-      </div>
-      <div className="p-1 col-span-2">
-        <AdmissionTable
-          records={record?.referrals}
-          title="Referrals to Medical Team"
-          newItemPath="new-referral"
-        />
-      </div>
-      <div className="p-1 col-span-2">
-        <AdmissionTable
-          records={record?.inHouseConsults}
-          title="In House Consults"
-          newItemPath="new-in-house-consult"
-        />
-      </div>
-      <div className="p-1 col-span-2">
-        <AdmissionTable
-          records={record?.floorIssues}
-          title="Floor Issues"
-          newItemPath="new-floor-issues"
-        />
-      </div>
+      {!!record?.operations?.length && (
+        <div className="p-1 col-span-2">
+          <OperationsTable record={record} />
+        </div>
+      )}
+      {!!record?.AEAdmissions?.length && (
+        <div className="p-1 col-span-2">
+          <AdmissionTable records={record?.AEAdmissions} />
+        </div>
+      )}
+      {!!record?.AEDischarges?.length && (
+        <div className="p-1 col-span-2">
+          <AdmissionTable
+            records={record?.AEDischarges}
+            title="A&E Discharges"
+            newItemPath="new-discharge"
+          />
+        </div>
+      )}
+      {!!record?.AEConsults?.length && (
+        <div className="p-1 col-span-2">
+          <AdmissionTable
+            records={record?.AEConsults}
+            title="A&E Consults"
+            newItemPath="new-consult"
+          />
+        </div>
+      )}
+      {!!record?.referrals?.length && (
+        <div className="p-1 col-span-2">
+          <AdmissionTable
+            records={record?.referrals}
+            title="Referrals to Medical Team"
+            newItemPath="new-referral"
+          />
+        </div>
+      )}
+      {!!record?.inHouseConsults?.length && (
+        <div className="p-1 col-span-2">
+          <AdmissionTable
+            records={record?.inHouseConsults}
+            title="In House Consults"
+            newItemPath="new-in-house-consult"
+          />
+        </div>
+      )}
+      {!!record?.floorIssues?.length && (
+        <div className="p-1 col-span-2">
+          <AdmissionTable
+            records={record?.floorIssues}
+            title="Floor Issues"
+            newItemPath="new-floor-issues"
+          />
+        </div>
+      )}
     </div>
   );
 };
