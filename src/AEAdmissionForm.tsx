@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import {
   Autocomplete,
@@ -7,7 +7,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import { AEAdmission } from "./types";
+import { AdmissionRecords, AEAdmission } from "./types";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useStorageClient } from "./App";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -28,9 +28,13 @@ function valueOrFreeText(
 export const AEAdmissionForm = ({
   onSave,
   title = "Add A&E Admission",
+  type = "AEAdmissions",
+  reloadData,
 }: {
   onSave: (admission: AEAdmission) => void;
   title?: string;
+  type: keyof AdmissionRecords;
+  reloadData: () => void;
 }) => {
   const { register, handleSubmit, control, reset } = useForm<AEAdmission>({
     defaultValues: {
@@ -76,10 +80,20 @@ export const AEAdmissionForm = ({
       reset(
         client
           .getSignOutRecord()
-          .AEAdmissions.find((it) => it.id === patientIdFromURL),
+          [type].find((it) => it.id === patientIdFromURL),
       );
     }
-  }, [searchParams, client, patientId, reset]);
+  }, [searchParams, client, patientId, reset, type]);
+  const onDelete = useCallback(() => {
+    const idToDelete = searchParams.get("patientId");
+    if (idToDelete) {
+      const value = client.getSignOutRecord();
+      const filteredList = value[type].filter((it) => it.id !== idToDelete);
+      client.setSignOutRecord({ ...value, [type]: filteredList });
+    }
+    reloadData();
+    navigate("/");
+  }, [searchParams, navigate, client, type, reloadData]);
 
   const onSubmit: SubmitHandler<AEAdmission> = (data) => {
     console.log(data);
@@ -720,10 +734,22 @@ export const AEAdmissionForm = ({
         <div className="col-span-9">
           <Switch {...register("anticipatedComplexDischarge")} />
         </div>
-        <div className="col-span-12 w-full">
-          <Button type="submit" variant="contained" color="primary">
-            Save
-          </Button>
+        <div className="col-span-12 w-full pb-4">
+          <span>
+            <Button type="submit" variant="contained" color="primary">
+              Save
+            </Button>
+          </span>
+          <span className="ml-2">
+            <Button
+              type="button"
+              variant="outlined"
+              color="info"
+              onClick={onDelete}
+            >
+              Delete
+            </Button>
+          </span>
         </div>
       </div>
     </form>

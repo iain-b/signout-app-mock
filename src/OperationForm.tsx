@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { OperationRecord } from "./types";
@@ -21,8 +21,10 @@ function valueOrFreeText(
 
 export const OperationForm = ({
   onSave,
+  reloadData,
 }: {
   onSave: (operation: OperationRecord) => void;
+  reloadData: () => void;
 }) => {
   const { register, handleSubmit, control, reset } = useForm<OperationRecord>({
     defaultValues: {
@@ -59,6 +61,19 @@ export const OperationForm = ({
     onSave(data);
     navigate("/");
   };
+
+  const onDelete = useCallback(() => {
+    const idToDelete = searchParams.get("patientId");
+    if (idToDelete) {
+      const value = client.getSignOutRecord();
+      const filteredList = value.operations.filter(
+        (it) => it.id !== idToDelete,
+      );
+      client.setSignOutRecord({ ...value, operations: filteredList });
+    }
+    reloadData();
+    navigate("/");
+  }, [searchParams, navigate, client, reloadData]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -183,9 +198,21 @@ export const OperationForm = ({
         </div>
 
         <div className="col-span-12 w-full">
-          <Button type="submit" variant="contained" color="primary">
-            Save Operation
-          </Button>
+          <span>
+            <Button type="submit" variant="contained" color="primary">
+              Save
+            </Button>
+          </span>
+          <span className="ml-2">
+            <Button
+              type="button"
+              variant="outlined"
+              color="info"
+              onClick={onDelete}
+            >
+              Delete
+            </Button>
+          </span>
         </div>
       </div>
     </form>

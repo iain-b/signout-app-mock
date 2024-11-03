@@ -59,7 +59,8 @@ const AdmissionTable = function AdmissionTable({
                 {admission.name
                   .split(" ")
                   .map((it) => it[0])
-                  .join("")}
+                  .join("")
+                  .toUpperCase()}
               </TableCell>
               <TableCell>
                 {today.diff(dayjs(admission.dateOfBirth), "year").toString()}
@@ -112,7 +113,8 @@ const OperationsTable = function OperationsTable({
                 {operation.name
                   .split(" ")
                   .map((it) => it[0])
-                  .join("")}
+                  .join("")
+                  .toUpperCase()}
               </TableCell>
               <TableCell>
                 {today.diff(dayjs(operation.dateOfBirth), "year").toString()}

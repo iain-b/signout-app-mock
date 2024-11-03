@@ -92,11 +92,19 @@ function App() {
             />
             <Route
               path="/new-admission"
-              element={<AEAdmissionForm onSave={saveAdmission} />}
+              element={
+                <AEAdmissionForm
+                  onSave={saveAdmission}
+                  type={"AEAdmissions"}
+                  reloadData={reloadData}
+                />
+              }
             ></Route>
             <Route
               path="/new-operation"
-              element={<OperationForm onSave={saveOperation} />}
+              element={
+                <OperationForm onSave={saveOperation} reloadData={reloadData} />
+              }
             ></Route>
 
             <Route
@@ -105,6 +113,8 @@ function App() {
                 <AEAdmissionForm
                   onSave={saveDischarge}
                   title={"Add A&E Discharge"}
+                  type="AEDischarges"
+                  reloadData={reloadData}
                 />
               }
             ></Route>
@@ -115,6 +125,8 @@ function App() {
                 <AEAdmissionForm
                   onSave={saveConsult}
                   title={"Add A&E Consult"}
+                  type="AEConsults"
+                  reloadData={reloadData}
                 />
               }
             ></Route>
@@ -125,6 +137,8 @@ function App() {
                 <AEAdmissionForm
                   onSave={saveReferral}
                   title={"Add Referral to Medical Team"}
+                  type="referrals"
+                  reloadData={reloadData}
                 />
               }
             ></Route>
@@ -135,6 +149,8 @@ function App() {
                 <AEAdmissionForm
                   onSave={saveInHouseConsult}
                   title={"Add In-House Consult"}
+                  type="inHouseConsults"
+                  reloadData={reloadData}
                 />
               }
             ></Route>
@@ -145,6 +161,8 @@ function App() {
                 <AEAdmissionForm
                   onSave={saveFloorIssue}
                   title={"Add Floor Issuse"}
+                  type="floorIssues"
+                  reloadData={reloadData}
                 />
               }
             ></Route>

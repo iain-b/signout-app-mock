@@ -108,6 +108,10 @@ export class StorageClient implements StorageAPI {
     return this.getCurrentRecord();
   }
 
+  setSignOutRecord(record: SignOutRecord) {
+    localStorage.setItem(SIGN_OUT_RECORD_KEY, JSON.stringify(record));
+  }
+
   setConsultant(name: string) {
     const currentRecord = this.getCurrentRecord();
     currentRecord.consultant = name;
