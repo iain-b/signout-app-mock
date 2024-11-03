@@ -442,7 +442,7 @@ export const AEAdmissionForm = ({
           />
         </div>
         <div className="lg:col-start-4 lg:col-span-9 col-span-12">
-          <div className="grid grid-cols-6 gap-1">
+          <div className="grid md:grid-cols-6 gap-1 grid-cols-3">
             {labsPerformed?.includes("Amylase") && (
               <>
                 <div className="col-span-1">
