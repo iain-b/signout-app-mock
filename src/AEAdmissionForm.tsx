@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
-import {
-  Autocomplete,
-  Button,
-  Divider,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Button, Switch, TextField } from "@mui/material";
 import { AdmissionRecords, AEAdmission } from "./types";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useStorageClient } from "./App";
