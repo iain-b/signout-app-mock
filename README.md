@@ -1,4 +1,9 @@
-# Getting Started with Create React App
+# About
+
+This is a frontend only (rapid) prototype intended for demonstration purposes. This application is not intended
+for production use.
+
+# Getting Started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

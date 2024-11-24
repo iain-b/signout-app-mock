@@ -79,7 +79,7 @@ function App() {
       <div className="max-w-4xl mx-auto px-4 bg-white">
         <h2 className="text-2xl text-gray-700 p-1 pt-8 pb-2">
           {" "}
-          MMUH Surgical Sign-Out
+          Electronic Surgical Signout Entry
         </h2>
         <hr />
         <Router>
