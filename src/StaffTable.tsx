@@ -36,10 +36,13 @@ export const StaffTable = ({
                 onChange();
               }}
             >
-              <MenuItem value="Augustus Caesar">Augustus Caesar</MenuItem>
-              <MenuItem value="Marcus Aurelius">Marcus Aurelius</MenuItem>
-              <MenuItem value="Trajan">Trajan</MenuItem>
-              <MenuItem value="Justinian">Justinian</MenuItem>
+              <MenuItem value="Mr Jurgen Mulsow">Mr Jurgen Mulsow</MenuItem>
+              <MenuItem value="Prof Conor Shields">Prof Conor Shields</MenuItem>
+              <MenuItem value="Prof Ann Brannigan">Prof Ann Brannigan</MenuItem>
+              <MenuItem value="Ms Ailin Rogers">Ms Ailin Rogers</MenuItem>
+              <MenuItem value="Prof Ronan Cahill">Prof Ronan Cahill</MenuItem>
+              <MenuItem value="Mr Gerry McEntee">Mr Gerry McEntee</MenuItem>
+              <MenuItem value="Mr John Conneelly">Mr John Conneelly</MenuItem>
             </Select>
           </TableCell>
         </TableRow>
@@ -57,11 +60,12 @@ export const StaffTable = ({
                 onChange();
               }}
             >
-              <MenuItem value="Caligula">Caligula</MenuItem>
-              <MenuItem value="Nero">Nero</MenuItem>
-              <MenuItem value="Tiberius">Tiberius</MenuItem>
-              <MenuItem value="Agrippina">Agrippina</MenuItem>
-              <MenuItem value="Claudius">Claudius</MenuItem>
+              <MenuItem value="Lauren O'Connell">Lauren O'Connell</MenuItem>
+              <MenuItem value="Eanna Ryan">Eanna Ryan</MenuItem>
+              <MenuItem value="Tim Harding">Tim Harding</MenuItem>
+              <MenuItem value="Niall Hardy">Niall Hardy</MenuItem>
+              <MenuItem value="Paddy Jordan">Paddy Jordan</MenuItem>
+              <MenuItem value="Toby Pring">Toby Pring</MenuItem>
             </Select>
           </TableCell>
         </TableRow>
@@ -79,11 +83,9 @@ export const StaffTable = ({
                 onChange();
               }}
             >
-              <MenuItem value="Civis 1">Civis 1</MenuItem>
-              <MenuItem value="Civis 2">Civis 2</MenuItem>
-              <MenuItem value="Civis 3">Civis 3</MenuItem>
-              <MenuItem value="Civis 4">Civis 4</MenuItem>
-              <MenuItem value="Civis 5">Civis 5</MenuItem>
+              <MenuItem value="Elaine Kelly">Elaine Kelly</MenuItem>
+              <MenuItem value="Conor Aylward">Conor Aylward</MenuItem>
+              <MenuItem value="Alexa O'Regan">Alexa O'Regan</MenuItem>
             </Select>
           </TableCell>
         </TableRow>
